@@ -25,6 +25,12 @@ config GRUB2_REVISION
 	  later.
 endchoice
 
+config GRUB2_GIT_REPOSITORY
+        string "GRUB2 Git repository"
+        default "https://git.savannah.gnu.org/git/grub.git/"
+        help
+          You can specify a non-default Git repository for the GRUB2 payload.
+
 config GRUB2_REVISION_ID
 	string "Insert a commit's SHA-1 or a branch name"
 	depends on GRUB2_REVISION
