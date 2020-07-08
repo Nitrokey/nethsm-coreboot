@@ -5,7 +5,7 @@ NAME-$(CONFIG_GRUB2_MASTER)=HEAD
 NAME-$(CONFIG_GRUB2_REVISION)=$(CONFIG_GRUB2_REVISION_ID)
 NAME-$(CONFIG_GRUB2_STABLE)=2.04
 
-project_git_repo=https://git.savannah.gnu.org/git/grub.git/
+project_git_repo=$(CONFIG_GRUB2_GIT_REPOSITORY)
 project_dir=grub2
 
 unexport HOSTCC CC LD OBJCOPY STRIP
