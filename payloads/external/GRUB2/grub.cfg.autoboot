@@ -7,6 +7,10 @@ terminfo serial dumb
 terminal_input serial
 terminal_output serial
 
+# Enable SBS (and its dependency, PGP). From this point on, signature
+# verification is enforced for all file operations.
+insmod sbs
+
 # Note that "set root=X" must be used below rather than "root X", as the latter
 # changes $prefix as well which we don't want.
 function try_boot
