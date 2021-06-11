@@ -135,6 +135,14 @@ config INTEL_BG_BPM_PRIV_KEY_FILE
 	  Location of the boot policy manifest (BPM) private key file in .pem format.
 
 
+config INTEL_CPU_INTEL_FIT_POSITION_BG
+	hex "FIT Position for CBFS"
+	default 0xffff0000
+	depends on INTEL_BG_SUPPORT
+	help
+	  Absolute position for FIT placement via CBFS. Boot Guard required this to be
+	  at top of flash minus 4MB
+
 if !INTEL_BG_BG_PROV_KM_USE_CFG_FILE && INTEL_BG_GENERATE_KM
 
 menu "KM options"

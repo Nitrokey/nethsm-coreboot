@@ -9,7 +9,12 @@ bootblock-y += fit.c
 cbfs-files-y += intel_fit
 intel_fit-file := fit_table.c:struct
 intel_fit-type := intel_fit
+
+ifneq ($(CONFIG_INTEL_BG_SUPPORT),y) # Set alignment if BootGuard is not set
 intel_fit-align := 16
+else
+intel_fit-position := $(CONFIG_INTEL_CPU_INTEL_FIT_POSITION_BG) # Set position for BootGuard
+endif
 
 $(call add_intermediate, set_fit_ptr, $(IFITTOOL))
 	@printf "    UPDATE-FIT set FIT pointer to table\n"
