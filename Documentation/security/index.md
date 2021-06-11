@@ -14,6 +14,9 @@ This section describes documentation about the security architecture of coreboot
 - [Intel TXT Initial Boot Block](intel/txt_ibb.md)
 - [Intel Authenticated Code Modules](intel/acm.md)
 
+## Intel Boot Guard
+- [Intel Boot Guard](intel/bootguard.md)
+
 ## SMM
 
 - [System Management Mode](smm.md)

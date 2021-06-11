@@ -15,11 +15,14 @@ A platform that wants to use Intel TXT must use two ACMs:
 
 ## Retrieving ACMs
 
-The ACMs can be downloaded on Intel's website:
+The ACMs for TXT can be downloaded on Intel's website:
 [Intel Trusted Execution Technology](https://software.intel.com/en-us/articles/intel-trusted-execution-technology)
 
 If you want to extract the BLOB from vendor firmware you can search for the
 string ``LCP_POLICY_DATA`` or ``TXT``.
+
+BootGuard ACMs are not publicly distributed and need a signed
+Non-Disclosure Agreement (NDA) with Intel.
 
 ## Header
 

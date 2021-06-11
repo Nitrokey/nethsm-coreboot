@@ -3,4 +3,5 @@
 source "src/security/intel/txt/Kconfig"
 source "src/security/intel/stm/Kconfig"
 source "src/security/intel/cbnt/Kconfig"
+source "src/security/intel/bg/Kconfig"
 source "src/security/intel/acm/Kconfig"
