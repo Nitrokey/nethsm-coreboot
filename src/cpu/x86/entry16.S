@@ -113,7 +113,7 @@ _start16bit:
 	subw	%ax, %bx
 	lgdtl	%cs:(%bx)
 
-#if CONFIG(INTEL_CBNT_SUPPORT)
+#if CONFIG(INTEL_CBNT_SUPPORT) || CONFIG(INTEL_BG_SUPPORT)
 #include <cpu/intel/msr.h>
 	movl	$MSR_BOOT_GUARD_SACM_INFO, %ecx
 	rdmsr
