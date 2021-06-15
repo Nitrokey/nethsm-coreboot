@@ -1,5 +1,8 @@
 ifeq ($(CONFIG_INTEL_BG_SUPPORT),y)
 
+all-y += ../cbnt/logging.c
+all-y += ../txt/logging.c
+
 # As specified in Intel Boot Guard BIOS
 # Specification, document number # 558294
 PK_HASH_ALG_SHA256:=11
