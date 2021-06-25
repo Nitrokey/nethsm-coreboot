@@ -1,5 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
+config INTEL_TXT_COMMON
+	bool
+
 config INTEL_TXT_LIB
 	bool
 	default n
@@ -17,11 +20,12 @@ config INTEL_TXT
 	select ENABLE_VMX if CPU_INTEL_COMMON
 	select AP_IN_SIPI_WAIT
 	select TPM_MEASURED_BOOT_INIT_BOOTBLOCK if TPM_MEASURED_BOOT
+	select INTEL_TXT_COMMON
 	depends on TPM
 	depends on PLATFORM_HAS_DRAM_CLEAR
 	depends on (SOC_INTEL_COMMON_BLOCK_SA || HAVE_CF9_RESET)
 
-if INTEL_TXT
+if INTEL_TXT_COMMON
 
 config INTEL_TXT_DPR_SIZE
 	int

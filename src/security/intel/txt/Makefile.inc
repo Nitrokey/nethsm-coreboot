@@ -1,6 +1,6 @@
 romstage-$(CONFIG_INTEL_TXT_LIB) += txtlib.c
 
-ifeq ($(CONFIG_INTEL_TXT),y)
+ifeq ($(CONFIG_INTEL_TXT_COMMON),y)
 
 all-y += logging.c
 
