@@ -47,23 +47,18 @@ void bootmem_platform_add_ranges(void)
 		return;
 
 	/* Chapter 5.5.5 Intel TXT reserved memory */
-	bootmem_add_range(TXT_RESERVED_SPACE,
-			  TXT_RESERVED_SPACE_SIZE,
-			  BM_MEM_RESERVED);
+	bootmem_add_range(TXT_RESERVED_SPACE, TXT_RESERVED_SPACE_SIZE, BM_MEM_RESERVED);
 
 	/* Intel TPM decode memory */
-	bootmem_add_range(TXT_TPM_DECODE_AREA,
-			  TXT_RESERVED_SPACE - TXT_TPM_DECODE_AREA,
+	bootmem_add_range(TXT_TPM_DECODE_AREA, TXT_RESERVED_SPACE - TXT_TPM_DECODE_AREA,
 			  BM_MEM_RESERVED);
 
 	/* Intel TXT public space memory */
-	bootmem_add_range(TXT_PUBLIC_SPACE,
-			  TXT_TPM_DECODE_AREA - TXT_PUBLIC_SPACE,
+	bootmem_add_range(TXT_PUBLIC_SPACE, TXT_TPM_DECODE_AREA - TXT_PUBLIC_SPACE,
 			  BM_MEM_RESERVED);
 
 	/* Intel TXT private space memory */
-	bootmem_add_range(TXT_PRIVATE_SPACE,
-			  TXT_PUBLIC_SPACE - TXT_PRIVATE_SPACE,
+	bootmem_add_range(TXT_PRIVATE_SPACE, TXT_PUBLIC_SPACE - TXT_PRIVATE_SPACE,
 			  BM_MEM_RESERVED);
 
 	const union dpr_register dpr = {
@@ -163,7 +158,7 @@ static void init_intel_txt(void *unused)
 		 */
 		if (intel_txt_run_bios_acm(ACMINPUT_NOP) < 0) {
 			printk(BIOS_ERR,
-				"TEE-TXT: Error calling BIOS ACM with NOP function.\n");
+			       "TEE-TXT: Error calling BIOS ACM with NOP function.\n");
 			return;
 		}
 	}
@@ -251,8 +246,7 @@ static void txt_heap_push_bdr_for_two_acms(u8 **heap_struct)
 	txt_heap_fill_bios_spec(&data.spec);
 
 	void *sinit_base = (void *)(uintptr_t)read64((void *)TXT_SINIT_BASE);
-	data.bdr.bios_sinit_size = cbfs_load(CONFIG_INTEL_TXT_CBFS_SINIT_ACM,
-					     sinit_base,
+	data.bdr.bios_sinit_size = cbfs_load(CONFIG_INTEL_CBFS_SINIT_ACM, sinit_base,
 					     read64((void *)TXT_SINIT_SIZE));
 
 	/* Extended elements - ACM addresses */
@@ -264,8 +258,7 @@ static void txt_heap_push_bdr_for_two_acms(u8 **heap_struct)
 	if (CONFIG(INTEL_TXT_LOGGING))
 		txt_dump_acm_info(sinit_base);
 
-	data.heap_acm.acm_addrs[0] =
-		(uintptr_t)cbfs_map(CONFIG_INTEL_TXT_CBFS_BIOS_ACM, NULL);
+	data.heap_acm.acm_addrs[0] = (uintptr_t)cbfs_map(CONFIG_INTEL_TXT_CBFS_BIOS_ACM, NULL);
 
 	data.heap_acm.header.size = sizeof(data.heap_acm);
 
@@ -301,8 +294,7 @@ static void txt_heap_push_bdr_for_one_acm(u8 **heap_struct)
 
 	/* Extended elements - ACM addresses */
 	data.heap_acm.header.type = HEAP_EXTDATA_TYPE_ACM;
-	data.heap_acm.acm_addrs[0] =
-		(uintptr_t)cbfs_map(CONFIG_INTEL_TXT_CBFS_BIOS_ACM, NULL);
+	data.heap_acm.acm_addrs[0] = (uintptr_t)cbfs_map(CONFIG_INTEL_CBFS_BIOS_ACM, NULL);
 	data.heap_acm.num_acms = 1;
 
 	data.heap_acm.header.size = sizeof(data.heap_acm);
@@ -401,8 +393,7 @@ static void lockdown_intel_txt(void *unused)
 	 * Chapter 5.5.6.1 DMA Protection Memory Region
 	 */
 
-	const u8 dpr_capable = !!(read64((void *)TXT_CAPABILITIES) &
-				  TXT_CAPABILITIES_DPR);
+	const u8 dpr_capable = !!(read64((void *)TXT_CAPABILITIES) & TXT_CAPABILITIES_DPR);
 	printk(BIOS_INFO, "TEE-TXT: DPR capable %x\n", dpr_capable);
 
 	if (dpr_capable) {
@@ -412,7 +403,7 @@ static void lockdown_intel_txt(void *unused)
 		printk(BIOS_DEBUG, "TEE-TXT: MCH DPR 0x%08x\n", dpr.raw);
 
 		printk(BIOS_DEBUG, "TEE-TXT: MCH DPR base @ 0x%08x size %u MiB\n",
-			(dpr.top - dpr.size) * MiB, dpr.size);
+		       (dpr.top - dpr.size) * MiB, dpr.size);
 
 		// DPR TODO: implement SA_ENABLE_DPR in the intelblocks
 
@@ -427,7 +418,8 @@ static void lockdown_intel_txt(void *unused)
 		}
 
 		_Static_assert(CONFIG_INTEL_TXT_HEAP_SIZE + CONFIG_INTEL_TXT_SINIT_SIZE
-			       < CONFIG_INTEL_TXT_DPR_SIZE * MiB, "TXT Heap and Sinit must fit DPR");
+				       < CONFIG_INTEL_TXT_DPR_SIZE * MiB,
+			       "TXT Heap and Sinit must fit DPR");
 
 		if (dpr.size < CONFIG_INTEL_TXT_DPR_SIZE) {
 			printk(BIOS_ERR, "TEE-TXT: MCH DPR configured size is too small.\n");
@@ -445,8 +437,7 @@ static void lockdown_intel_txt(void *unused)
 
 		write64((void *)TXT_DPR, dpr.raw);
 
-		printk(BIOS_INFO, "TEE-TXT: TXT.DPR 0x%08x\n",
-		       read32((void *)TXT_DPR));
+		printk(BIOS_INFO, "TEE-TXT: TXT.DPR 0x%08x\n", read32((void *)TXT_DPR));
 	}
 
 	/*
@@ -463,8 +454,8 @@ static void lockdown_intel_txt(void *unused)
 	 */
 	write64((void *)TXT_SINIT_SIZE, CONFIG_INTEL_TXT_SINIT_SIZE);
 	write64((void *)TXT_SINIT_BASE,
-		ALIGN_DOWN(read64((void *)TXT_HEAP_BASE) -
-			   read64((void *)TXT_SINIT_SIZE), 4096));
+		ALIGN_DOWN(read64((void *)TXT_HEAP_BASE) - read64((void *)TXT_SINIT_SIZE),
+			   4096));
 
 	/*
 	 * FIXME: Server-TXT capable platforms need to install an STM in SMM and set up MSEG.

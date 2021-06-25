@@ -1,0 +1,46 @@
+# SPDX-License-Identifier: GPL-2.0-only
+
+config INTEL_ACM
+	bool
+	help
+	  Select this to include ACMs.
+
+if INTEL_ACM
+
+config INTEL_BIOSACM_FILE
+	string "BIOS ACM / S-ACM file"
+	depends on INTEL_TXT || INTEL_CBNT_SUPPORT
+	default "3rdparty/blobs/soc/intel/skylake/biosacm.bin" if SOC_INTEL_COMMON_SKYLAKE_BASE
+	help
+	  Intel BIOS ACM or S-ACM file. This file can be obtained through privileged
+	  access to Intel resources. Or for some platforms found inside the
+	  blob repository.
+
+config INTEL_SINITACM_FILE
+	string "SINIT ACM file"
+	depends on INTEL_TXT || INTEL_CBNT_SUPPORT
+	default "3rdparty/blobs/soc/intel/skylake/sinitacm.bin" if SOC_INTEL_COMMON_SKYLAKE_BASE
+	help
+	  Intel TXT/CBnT SINIT ACM file. This file can be obtained through privileged
+	  access to Intel resources. Or for some platforms found inside the
+	  blob repository.
+
+config INTEL_CBFS_BIOS_ACM
+	string
+	default "txt_bios_acm.bin" if INTEL_TXT
+	default "cbnt_s_acm.bin" if INTEL_CBNT_SUPPORT
+
+config INTEL_CBFS_SINIT_ACM
+	string
+	default "txt_sinit_acm.bin" if INTEL_TXT
+	default "cbnt_sinit_acm.bin" if INTEL_CBNT_SUPPORT
+
+config INTEL_BIOSACM_ALIGNMENT
+	hex
+	default 0x40000 if INTEL_CBNT_SUPPORT
+	default 0x20000 # 128 KiB
+	help
+	  Exceptions are Ivy and Sandy Bridge with 64 KiB and Purley with 256 KiB
+	  alignment size. If necessary, override from platform-specific Kconfig.
+
+endif
