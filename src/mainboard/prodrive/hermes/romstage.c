@@ -86,12 +86,8 @@ void mainboard_memory_init_params(FSPM_UPD *memupd)
 	if (board_cfg && board_cfg->primary_video == PRIMARY_VIDEO_INTEL)
 		memupd->FspmConfig.PrimaryDisplay = 0; /* iGPU is primary */
 
-	/* Overwrite memupd */
-	if (!check_signature(offsetof(struct eeprom_layout, mupd), FSPM_UPD_SIGNATURE))
-		return;
-
-	READ_EEPROM_FSP_M(memupd, FspmConfig.RMT);
-	READ_EEPROM_FSP_M(memupd, FspmConfig.HyperThreading);
-	READ_EEPROM_FSP_M(memupd, FspmConfig.BootFrequency);
-	READ_EEPROM_FSP_M(memupd, FspmTestConfig.VtdDisable);
+	memupd->FspmConfig.RMT = 0;
+	memupd->FspmConfig.HyperThreading = 1;
+	memupd->FspmConfig.BootFrequency = 2;
+	memupd->FspmTestConfig.VtdDisable = 0;
 }

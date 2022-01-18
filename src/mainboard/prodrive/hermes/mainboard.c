@@ -285,16 +285,7 @@ static void mainboard_early(void *unused)
 
 	config->disable_vmx = board_cfg->vtx_disabled;
 
-	if (check_signature(offsetof(struct eeprom_layout, supd), FSPS_UPD_SIGNATURE)) {
-		struct {
-			struct {
-				u8 TurboMode;
-			} FspsConfig;
-		} supd = {0};
-
-		READ_EEPROM_FSP_S((&supd), FspsConfig.TurboMode);
-		config->cpu_turbo_disable = !supd.FspsConfig.TurboMode;
-	}
+	config->cpu_turbo_disable = 0;
 
 	log_reset_causes();
 }
