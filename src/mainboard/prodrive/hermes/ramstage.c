@@ -14,10 +14,6 @@ void mainboard_silicon_init_params(FSPS_UPD *supd)
 
 	params->SataLedEnable = 1;
 
-	/* Overwrite params */
-	if (!check_signature(offsetof(struct eeprom_layout, supd), FSPS_UPD_SIGNATURE))
-		return;
-
-	READ_EEPROM_FSP_S(supd, FspsTestConfig.VtdDisableDeprecated);
-	READ_EEPROM_FSP_S(supd, FspsConfig.PchPmWolEnableOverride);
+	supd->FspsTestConfig.VtdDisableDeprecated = 0;
+	supd->FspsConfig.PchPmWolEnableOverride = 0;
 }

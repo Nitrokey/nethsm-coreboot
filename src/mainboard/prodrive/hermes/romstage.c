@@ -11,12 +11,8 @@ void mainboard_memory_init_params(FSPM_UPD *memupd)
 	memupd->FspmTestConfig.SmbusSpdWriteDisable = 0;
 	cannonlake_memcfg_init(&memupd->FspmConfig, variant_memcfg_config());
 
-	/* Overwrite memupd */
-	if (!check_signature(offsetof(struct eeprom_layout, mupd), FSPM_UPD_SIGNATURE))
-		return;
-
-	READ_EEPROM_FSP_M(memupd, FspmConfig.RMT);
-	READ_EEPROM_FSP_M(memupd, FspmConfig.HyperThreading);
-	READ_EEPROM_FSP_M(memupd, FspmConfig.BootFrequency);
-	READ_EEPROM_FSP_M(memupd, FspmTestConfig.VtdDisable);
+	memupd->FspmConfig.RMT = 0;
+	memupd->FspmConfig.HyperThreading = 1;
+	memupd->FspmConfig.BootFrequency = 2;
+	memupd->FspmTestConfig.VtdDisable = 0;
 }
