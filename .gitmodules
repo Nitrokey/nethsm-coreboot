@@ -60,3 +60,4 @@
 	path = 3rdparty/stm
 	url = ../STM
 	branch = stmpe
+	ignore = dirty
