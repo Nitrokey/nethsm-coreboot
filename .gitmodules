@@ -61,6 +61,7 @@
 	path = 3rdparty/stm
 	url = ../STM
 	branch = stmpe
+	ignore = dirty
 [submodule "util/goswid"]
 	path = util/goswid
 	url = ../goswid
