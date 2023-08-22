@@ -229,4 +229,33 @@ static void recover_tpm_log(int is_recovery)
 CBMEM_CREATION_HOOK(recover_tpm_log);
 #endif
 
+static void tspi_measure_additional_files(void *unused)
+{
+#ifdef CONFIG_TPM_MEASURED_BOOT_ADDITIONAL_FILES
+	char files[sizeof(CONFIG_TPM_MEASURED_BOOT_ADDITIONAL_FILES)]
+		= CONFIG_TPM_MEASURED_BOOT_ADDITIONAL_FILES;
+#else
+	char files[1] = "";
+#endif
+
+	if (sizeof(files) < 2) {
+		return;
+	}
+
+	const char *delim = " ";
+	char *file, *pos;
+
+	printk(BIOS_INFO, "TPM: Measure additional files: %s\n", files);
+
+	for (file = strtok_r(files, delim, &pos); file;
+		file = strtok_r(NULL, delim, &pos)) {
+		cbfs_unmap(cbfs_map(file, NULL));
+	}
+}
+
+#ifdef CONFIG_TPM_MEASURED_BOOT_ADDITIONAL_FILES
+BOOT_STATE_INIT_ENTRY(BS_PAYLOAD_LOAD, BS_ON_EXIT, tspi_measure_additional_files, NULL);
+#endif
+
 BOOT_STATE_INIT_ENTRY(BS_PAYLOAD_BOOT, BS_ON_ENTRY, tpm_log_dump, NULL);
+
