@@ -145,6 +145,16 @@ config TPM_MEASURED_BOOT_RUNTIME_DATA
 	  Runtime data whitelist of cbfs filenames. Needs to be a
 	  space delimited list
 
+config TPM_MEASURED_BOOT_ADDITIONAL_FILES
+	string "Additional CBFS files to measure"
+	default ""
+	depends on TPM_MEASURED_BOOT
+	help
+	  List of all CBFS files that will be measured right before the
+	  payload starts.  If the payload cannot measure by itself, you need
+	  to list all files that the payload will access, separated by
+	  spaces.
+
 config PCR_BOOT_MODE
 	int
 	default 0 if CHROMEOS
