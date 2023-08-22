@@ -258,7 +258,7 @@ static void txt_heap_push_bdr_for_two_acms(u8 **heap_struct)
 	if (CONFIG(INTEL_TXT_LOGGING))
 		txt_dump_acm_info(sinit_base);
 
-	data.heap_acm.acm_addrs[0] = (uintptr_t)cbfs_map(CONFIG_INTEL_TXT_CBFS_BIOS_ACM, NULL);
+	data.heap_acm.acm_addrs[0] = (uintptr_t)cbfs_map(CONFIG_INTEL_CBFS_BIOS_ACM, NULL);
 
 	data.heap_acm.header.size = sizeof(data.heap_acm);
 
@@ -320,7 +320,7 @@ static void txt_initialize_heap(void)
 	 * invalid sizeof BDR. Check if SINIT ACM is present in CBFS and push
 	 * properly formatted BDR region onto the TXT heap.
 	 */
-	if (cbfs_file_exists(CONFIG_INTEL_TXT_CBFS_SINIT_ACM))
+	if (cbfs_file_exists(CONFIG_INTEL_CBFS_SINIT_ACM))
 		txt_heap_push_bdr_for_two_acms(&heap_struct);
 	else
 		txt_heap_push_bdr_for_one_acm(&heap_struct);

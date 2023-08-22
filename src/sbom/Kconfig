@@ -107,7 +107,7 @@ config SBOM_EC_PATH
 
 config SBOM_SINIT_ACM
 	bool "Include SINIT ACM metadata in SBOM"
-	depends on INTEL_TXT_SINITACM_FILE != ""
+	depends on INTEL_SINITACM_FILE != ""
 	default n
 	help
 	  Select this option if you want to include a
@@ -125,7 +125,7 @@ config SBOM_SINIT_ACM_PATH
 
 config SBOM_BIOS_ACM
 	bool "Include BIOS ACM metadata in SBOM"
-	depends on INTEL_TXT_BIOSACM_FILE != ""
+	depends on INTEL_BIOSACM_FILE != ""
 	default n
 	help
 	  Select this option if you want to include a
