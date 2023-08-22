@@ -45,7 +45,7 @@ ifeq ($(CONFIG_INTEL_BG_GENERATE_BPM),y)
 ifeq ($(CONFIG_INTEL_BG_BG_PROV_BPM_USE_CFG_FILE),y)
 $(obj)/bpm_unsigned.bin: $(obj)/coreboot.rom $(BG_PROV) $(BG_CFG)
 	printf "    BG_PROV    creating unsigned BPM using config file\n"
-	$(BG_PROV) bpm-gen $@ $< --config=$(BG_CFG) --cut
+	$(BG_PROV) bpm-gen $@ $< --config=$(BG_CFG)
 else
 $(obj)/bpm_unsigned.bin: $(obj)/coreboot.rom $(BG_PROV)
 	printf "    BG_PROV    creating unsigned BPM\n"

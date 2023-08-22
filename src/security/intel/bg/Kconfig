@@ -6,6 +6,7 @@ config INTEL_BG_SUPPORT
 	select INTEL_ACM
 	depends on CPU_INTEL_FIRMWARE_INTERFACE_TABLE
 	# With Boot Guard the bootblock is set up as a Boot Guard IBB and needs a fixed size
+        select TPM_MEASURED_BOOT_INIT_BOOTBLOCK if TPM_MEASURED_BOOT
 	help
 	  Enables Intel Boot Guard Support. This will enable one to add a
 	  Key Manifest (KM) and a Boot Policy Manifest (BPM) to the
