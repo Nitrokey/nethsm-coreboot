@@ -31,7 +31,8 @@ OBJ_ME_BIN := $(obj)/me.bin
 ifneq ($(CONFIG_STITCH_ME_BIN),y)
 
 $(OBJ_ME_BIN): $(call strip_quotes,$(CONFIG_ME_BIN_PATH))
-	cp $< $@
+	printf "    BSPATCH    Disable fTPM in me.bin\n"
+	bspatch $< $@ me_no_ptt_$(shell shasum $< | cut -b 1-8).bspatch
 
 endif
 
