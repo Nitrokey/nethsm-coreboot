@@ -231,7 +231,7 @@ tpm_result_t tpm_extend_pcr(int pcr, enum vb2_hash_algorithm digest_algo,
 		rc = tlcl_lib_init();
 		if (rc != TPM_SUCCESS) {
 			printk(BIOS_ERR, "TPM Error (%#x): Can't initialize library.\n", rc);
-			return rc;
+			goto failure;
 		}
 
 		printk(BIOS_DEBUG, "TPM: Extending digest for `%s` into PCR %d\n", name, pcr);
@@ -239,7 +239,7 @@ tpm_result_t tpm_extend_pcr(int pcr, enum vb2_hash_algorithm digest_algo,
 		if (rc != TPM_SUCCESS) {
 			printk(BIOS_ERR, "TPM Error (%#x): Extending hash for `%s` into PCR %d failed.\n",
 			       rc, name, pcr);
-			return rc;
+			goto failure;
 		}
 	}
 
@@ -250,6 +250,13 @@ tpm_result_t tpm_extend_pcr(int pcr, enum vb2_hash_algorithm digest_algo,
 	       name, pcr, tspi_tpm_is_setup() ? "measured" : "logged");
 
 	return TPM_SUCCESS;
+
+failure:
+	if (CONFIG(TPM_MEASURED_BOOT) && tpm_log_get_size(tpm_log_init()) > 0) {
+		die("TPM log not empty. Boot measurement chain is interrupted, halting.");
+	}
+
+	return rc;
 }
 
 #if CONFIG(VBOOT_LIB)
