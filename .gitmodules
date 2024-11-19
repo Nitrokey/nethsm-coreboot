@@ -1,73 +1,92 @@
 [submodule "3rdparty/blobs"]
 	path = 3rdparty/blobs
+	shallow = true
 	url = https://github.com/coreboot/blobs.git
 	update = none
 	ignore = dirty
 [submodule "util/nvidia-cbootimage"]
 	path = util/nvidia/cbootimage
+	shallow = true
 	url = https://github.com/coreboot/nvidia-cbootimage.git
 [submodule "vboot"]
 	path = 3rdparty/vboot
+	shallow = true
 	url = https://github.com/coreboot/vboot.git
 	branch = main
 [submodule "arm-trusted-firmware"]
 	path = 3rdparty/arm-trusted-firmware
+	shallow = true
 	url = https://github.com/coreboot/arm-trusted-firmware.git
 [submodule "3rdparty/chromeec"]
 	path = 3rdparty/chromeec
+	shallow = true
 	url = https://github.com/coreboot/chrome-ec.git
 [submodule "libhwbase"]
 	path = 3rdparty/libhwbase
+	shallow = true
 	url = https://github.com/coreboot/libhwbase.git
 [submodule "libgfxinit"]
 	path = 3rdparty/libgfxinit
+	shallow = true
 	url = https://github.com/coreboot/libgfxinit.git
 [submodule "3rdparty/fsp"]
 	path = 3rdparty/fsp
+	shallow = true
 	url = https://github.com/coreboot/fsp.git
 	update = none
 	ignore = dirty
 [submodule "opensbi"]
 	path = 3rdparty/opensbi
+	shallow = true
 	url = https://github.com/coreboot/opensbi.git
 [submodule "intel-microcode"]
 	path = 3rdparty/intel-microcode
+	shallow = true
 	url = https://github.com/coreboot/intel-microcode.git
 	update = none
 	ignore = dirty
 	branch = main
 [submodule "3rdparty/ffs"]
 	path = 3rdparty/ffs
+	shallow = true
 	url = https://github.com/coreboot/ffs.git
 [submodule "3rdparty/amd_blobs"]
 	path = 3rdparty/amd_blobs
+	shallow = true
 	url = https://github.com/coreboot/amd_blobs
 	update = none
 	ignore = dirty
 [submodule "3rdparty/cmocka"]
 	path = 3rdparty/cmocka
+	shallow = true
 	url = https://github.com/coreboot/cmocka.git
 	update = none
 	branch = stable-1.1
 [submodule "3rdparty/qc_blobs"]
 	path = 3rdparty/qc_blobs
+	shallow = true
 	url = https://github.com/coreboot/qc_blobs.git
 	update = none
 	ignore = dirty
 [submodule "3rdparty/intel-sec-tools"]
 	path = 3rdparty/intel-sec-tools
+	shallow = true
 	url = https://github.com/coreboot/9esec-security-tooling.git
 [submodule "3rdparty/stm"]
 	path = 3rdparty/stm
+	shallow = true
 	url = https://github.com/coreboot/STM.git
 	branch = stmpe
 [submodule "util/goswid"]
 	path = util/goswid
+	shallow = true
 	url = https://github.com/coreboot/goswid
 	branch = trunk
 [submodule "src/vendorcode/amd/opensil/genoa_poc/opensil"]
 	path = src/vendorcode/amd/opensil/genoa_poc/opensil
+	shallow = true
 	url = https://github.com/coreboot/opensil_genoa_poc.git
 [submodule "3rdparty/dasharo-blobs"]
 	path = 3rdparty/dasharo-blobs
+	shallow = true
 	url = https://github.com/Dasharo/dasharo-blobs.git
