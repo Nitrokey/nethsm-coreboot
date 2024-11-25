@@ -11,7 +11,7 @@ bootblock-y += fit.c
 cbfs-files-y += intel_fit
 intel_fit-file := fit_table.c:struct
 intel_fit-type := intel_fit
-intel_fit-align := 16
+intel_fit-position := 0xfffeff80
 
 ifneq ($(CONFIG_INTEL_FIT_LOC),)
 intel_fit-COREBOOT-position := $(CONFIG_INTEL_FIT_LOC)
