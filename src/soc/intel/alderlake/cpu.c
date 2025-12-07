@@ -26,6 +26,7 @@
 #include <soc/soc_chip.h>
 #include <static.h>
 #include <types.h>
+#include <smp/node.h>
 
 enum alderlake_model {
 	ADL_MODEL_P_M = 0x9A,
@@ -106,6 +107,47 @@ bool soc_is_nominal_freq_supported(void)
 	return true;
 }
 
+
+/* Turbo ratio reduction in 100 MHz steps (2 = 200 MHz, 3 = 300 MHz) */
+#define TURBO_RATIO_REDUCTION 10
+
+static void configure_turbo_ratios(void)
+{
+	msr_t msr;
+
+	/* Check if turbo ratio limit is programmable */
+	msr = rdmsr(MSR_PLATFORM_INFO);
+	if (!(msr.lo & (1 << 28))) {
+		printk(BIOS_DEBUG, "Turbo ratio limit is not programmable\n");
+		return;
+	}
+
+	/* Read current turbo ratio limits */
+	msr = rdmsr(MSR_TURBO_RATIO_LIMIT);
+
+	printk(BIOS_DEBUG, "Original MSR_TURBO_RATIO_LIMIT: 0x%08x%08x\n",
+	       msr.hi, msr.lo);
+
+	/* MSR_TURBO_RATIO_LIMIT is package-scoped, only configure once */
+	if (!boot_cpu())
+		return;
+
+	// verify that the values match i9-14900K
+	if (msr.hi != 0x39393939 || msr.lo != 0x39393c3c) {
+		return;
+	}
+
+	/* Lower all P-core ratios */
+	msr.lo = 0x37373939;  // Cores 1-4
+	msr.hi = 0x37373737;  // Cores 5-8
+
+	/* Write modified turbo ratio limits */
+	wrmsr(MSR_TURBO_RATIO_LIMIT, msr);
+
+	printk(BIOS_DEBUG, "Modified MSR_TURBO_RATIO_LIMIT: 0x%08x%08x\n",
+	       msr.hi, msr.lo);
+}
+
 /* All CPUs including BSP will run the following function. */
 void soc_core_init(struct device *cpu)
 {
@@ -137,6 +179,10 @@ void soc_core_init(struct device *cpu)
 	if (conf->enable_energy_perf_pref)
 		if (check_energy_perf_cap())
 			set_energy_perf_pref(conf->energy_perf_pref_value);
+
+	/* Configure turbo ratio limits */
+	configure_turbo_ratios();
+
 	/* Enable Turbo */
 	enable_turbo();
 
