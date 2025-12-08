@@ -138,8 +138,8 @@ static void configure_turbo_ratios(void)
 	}
 
 	/* Lower all P-core ratios */
-	msr.lo = 0x37373737;  // Cores 1-4
-	msr.hi = 0x37373737;  // Cores 5-8
+	msr.lo = 0x36363636;  // Cores 1-4
+	msr.hi = 0x36363636;  // Cores 5-8
 
 	/* Write modified turbo ratio limits */
 	wrmsr(MSR_TURBO_RATIO_LIMIT, msr);
